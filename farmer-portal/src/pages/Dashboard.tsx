@@ -17,10 +17,10 @@ const Dashboard: React.FC = () => {
   ];
 
   const recommendations = [
-    { id: 101, title: 'Premium Ponni Rice - 50 Quintals', price: '₹ 1,10,000', location: 'Thanjavur, Tamil Nadu', year: 'Harvest 2026', image: './images/rice.png' },
-    { id: 102, title: 'Mahindra Tractor 575 DI SP Plus', price: '₹ 5,25,000', location: 'Tirupur Somanur Road', year: '2022 - 1,200 hrs', image: './images/tractor.png' },
-    { id: 103, title: 'Organic Tomato Seeds', price: '₹ 1,500', location: 'Coimbatore', year: 'New', image: './images/seeds.png' },
-    { id: 104, title: 'Agricultural Land - 5 Acres', price: '₹ 45,00,000', location: 'Pollachi', year: 'Ready to use', image: './images/land.png' },
+    { id: 101, title: 'Fresh Organic Tomatoes', price: '₹ 2,500 / quintal', location: 'Dindigul, Tamil Nadu', year: 'Harvested Today', image: './images/tomato.png' },
+    { id: 102, title: 'Ooty Potatoes - Premium Quality', price: '₹ 3,200 / quintal', location: 'Mettupalayam Market', year: 'Fresh Stock', image: './images/potato.png' },
+    { id: 103, title: 'Bellary Onions - 50 Bags', price: '₹ 1,800 / quintal', location: 'Oddanchatram Market', year: 'Dry & Good Size', image: './images/onion.png' },
+    { id: 104, title: 'Salem Mangoes (Alphonso)', price: '₹ 12,000 / ton', location: 'Salem, Tamil Nadu', year: 'Ready to dispatch', image: './images/fruits.png' },
   ];
 
   return (

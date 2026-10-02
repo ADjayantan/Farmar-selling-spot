@@ -3,10 +3,10 @@ import api from '../services/api';
 import { Heart, Eye, MoreHorizontal } from 'lucide-react';
 
 const mockListings = [
-  { _id: '1', cropName: 'Premium Ponni Rice', quantity: 20, unit: 'quintal', sellingMode: 'AUCTION', auctionBasePrice: 2200, fixedPrice: 0, status: 'LIVE', createdAt: new Date().toISOString(), photos: ['./images/rice.png'] },
-  { _id: '2', cropName: 'Organic Tomatoes', quantity: 500, unit: 'kg', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 45, status: 'ACTIVE', createdAt: new Date().toISOString(), photos: ['./images/seeds.png'] },
-  { _id: '3', cropName: 'Used Tractor', quantity: 1, unit: 'unit', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 250000, status: 'SOLD', createdAt: new Date(Date.now() - 7*24*60*60*1000).toISOString(), photos: ['./images/tractor.png'] },
-  { _id: '4', cropName: 'Agricultural Land', quantity: 5, unit: 'acre', sellingMode: 'AUCTION', auctionBasePrice: 3500000, fixedPrice: 0, status: 'EXPIRED', createdAt: new Date(Date.now() - 30*24*60*60*1000).toISOString(), photos: ['./images/land.png'] },
+  { _id: '1', cropName: 'Fresh Organic Tomatoes', quantity: 20, unit: 'quintal', sellingMode: 'AUCTION', auctionBasePrice: 2200, fixedPrice: 0, status: 'LIVE', createdAt: new Date().toISOString(), photos: ['./images/tomato.png'] },
+  { _id: '2', cropName: 'Ooty Potatoes', quantity: 50, unit: 'quintal', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 3200, status: 'ACTIVE', createdAt: new Date().toISOString(), photos: ['./images/potato.png'] },
+  { _id: '3', cropName: 'Bellary Onions', quantity: 100, unit: 'bags', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 1800, status: 'SOLD', createdAt: new Date(Date.now() - 7*24*60*60*1000).toISOString(), photos: ['./images/onion.png'] },
+  { _id: '4', cropName: 'Salem Mangoes', quantity: 10, unit: 'ton', sellingMode: 'AUCTION', auctionBasePrice: 12000, fixedPrice: 0, status: 'EXPIRED', createdAt: new Date(Date.now() - 30*24*60*60*1000).toISOString(), photos: ['./images/fruits.png'] },
 ];
 
 const MyListings: React.FC = () => {
