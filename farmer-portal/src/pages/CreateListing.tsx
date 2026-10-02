@@ -1,138 +1,197 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '../context/LanguageContext';
+import { ChevronLeft } from 'lucide-react';
 import api from '../services/api';
 
 const CreateListing: React.FC = () => {
-  const { t } = useLanguage();
   const navigate = useNavigate();
-  
-  const [type, setType] = useState<'FIXED' | 'AUCTION'>('FIXED');
-  const [crop, setCrop] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [basePrice, setBasePrice] = useState('');
-  const [minBidIncrement, setMinBidIncrement] = useState('100');
-  const [closingTime, setClosingTime] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    cropName: '',
+    variety: '',
+    quantity: '',
+    unit: 'quintal',
+    qualityGrade: 'Grade A',
+    pickupLocation: '',
+    sellingMode: 'FIXED_PRICE',
+    fixedPrice: '',
+  });
+
+  const categories = [
+    { id: 'Crops', name: 'Crops & Veggies', icon: '🌾' },
+    { id: 'Tractors', name: 'Tractors', icon: '🚜' },
+    { id: 'Properties', name: 'Properties', icon: '🏠' },
+    { id: 'Machinery', name: 'Machinery', icon: '⚙️' },
+    { id: 'Livestock', name: 'Livestock', icon: '🐄' },
+    { id: 'Fertilizers', name: 'Fertilizers', icon: '🧪' },
+  ];
+
+  const handleCategorySelect = (catId: string) => {
+    setFormData({ ...formData, cropName: catId });
+    setStep(2);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    
     try {
-      const payload: any = {
-        crop,
-        quantity: Number(quantity),
-        type,
-        basePrice: Number(basePrice),
-      };
-
-      if (type === 'AUCTION') {
-        payload.minBidIncrement = Number(minBidIncrement);
-        payload.closingTime = closingTime || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-      }
-
-      await api.post('/listings', payload);
+      await api.post('/listings', {
+        ...formData,
+        quantity: Number(formData.quantity),
+        fixedPrice: Number(formData.fixedPrice),
+      });
       navigate('/listings');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create listing');
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      alert('Error creating listing');
     }
   };
 
+  if (step === 1) {
+    return (
+      <div className="flex flex-col min-h-screen bg-[#121212] text-white">
+        <div className="bg-[#1e1e1e] p-4 flex items-center border-b border-gray-800">
+          <button onClick={() => navigate('/dashboard')} className="mr-4">
+            <ChevronLeft size={24} />
+          </button>
+          <h1 className="font-bold text-lg">What are you offering?</h1>
+        </div>
+        <div className="grid grid-cols-2 p-0">
+          {categories.map((cat, index) => (
+            <div 
+              key={cat.id} 
+              className={`flex flex-col items-center justify-center p-6 border-b border-gray-800 cursor-pointer hover:bg-[#1a1a1a] ${index % 2 === 0 ? 'border-r' : ''}`}
+              onClick={() => handleCategorySelect(cat.id)}
+            >
+              <div className="text-5xl mb-3">{cat.icon}</div>
+              <span className="text-sm font-medium">{cat.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('createListing')}</h2>
-      
-      {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
+    <div className="flex flex-col min-h-screen bg-[#121212] text-white pb-20">
+      <div className="bg-[#1e1e1e] p-4 flex items-center border-b border-gray-800 sticky top-0 z-10">
+        <button onClick={() => setStep(1)} className="mr-4">
+          <ChevronLeft size={24} />
+        </button>
+        <h1 className="font-bold text-lg">Include some details</h1>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Listing Type</label>
-          <div className="flex space-x-4">
-            <label className="flex items-center space-x-2">
-              <input type="radio" checked={type === 'FIXED'} onChange={() => setType('FIXED')} className="text-green-600 focus:ring-green-500" />
-              <span>Fixed Price</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input type="radio" checked={type === 'AUCTION'} onChange={() => setType('AUCTION')} className="text-green-600 focus:ring-green-500" />
-              <span>Live Auction</span>
-            </label>
+      <div className="p-4 flex-1 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
+          {/* Type Selection mimicking the screenshot's 'Type*' */}
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Type*</label>
+            <div className="grid grid-cols-2 gap-2">
+              <div 
+                className={`border rounded py-3 text-center text-sm font-medium cursor-pointer ${formData.sellingMode === 'FIXED_PRICE' ? 'border-white text-white' : 'border-gray-600 text-gray-400'}`}
+                onClick={() => setFormData({...formData, sellingMode: 'FIXED_PRICE'})}
+              >
+                Fixed Price
+              </div>
+              <div 
+                className={`border rounded py-3 text-center text-sm font-medium cursor-pointer ${formData.sellingMode === 'AUCTION' ? 'border-white text-white' : 'border-gray-600 text-gray-400'}`}
+                onClick={() => setFormData({...formData, sellingMode: 'AUCTION'})}
+              >
+                Live Auction
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Crop Name</label>
-          <input 
-            type="text" 
-            value={crop} 
-            onChange={(e) => setCrop(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500"
-            placeholder="e.g. Ponni Rice"
-            required 
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Crop Name / Title*</label>
+            <input 
+              type="text" 
+              name="cropName"
+              value={formData.cropName} 
+              onChange={handleChange}
+              className="w-full bg-transparent border border-gray-600 rounded p-3 text-white focus:border-white focus:outline-none"
+              required 
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Quantity (in Quintals)</label>
-          <input 
-            type="number" 
-            value={quantity} 
-            onChange={(e) => setQuantity(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500"
-            placeholder="e.g. 50"
-            required 
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Base Price (₹/Quintal)</label>
-          <input 
-            type="number" 
-            value={basePrice} 
-            onChange={(e) => setBasePrice(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500"
-            placeholder="e.g. 4500"
-            required 
-          />
-        </div>
-
-        {type === 'AUCTION' && (
-          <>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Min Bid Increment (₹)</label>
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Quantity*</label>
+            <div className="flex space-x-2">
               <input 
                 type="number" 
-                value={minBidIncrement} 
-                onChange={(e) => setMinBidIncrement(e.target.value)} 
-                className="w-full p-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500"
+                name="quantity"
+                value={formData.quantity} 
+                onChange={handleChange}
+                className="w-2/3 bg-transparent border border-gray-600 rounded p-3 text-white focus:border-white focus:outline-none"
+                placeholder="e.g. 50"
                 required 
               />
+              <select 
+                name="unit" 
+                value={formData.unit} 
+                onChange={handleChange}
+                className="w-1/3 bg-transparent border border-gray-600 rounded p-3 text-white focus:border-white focus:outline-none appearance-none"
+              >
+                <option value="quintal" className="bg-[#121212]">Quintals</option>
+                <option value="kg" className="bg-[#121212]">Kg</option>
+                <option value="tons" className="bg-[#121212]">Tons</option>
+              </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Closing Time</label>
-              <input 
-                type="datetime-local" 
-                value={closingTime} 
-                onChange={(e) => setClosingTime(e.target.value)} 
-                className="w-full p-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500"
-              />
-              <p className="text-xs text-gray-500 mt-1">Leave blank for 24 hours from now</p>
-            </div>
-          </>
-        )}
+          </div>
 
-        <button 
-          type="submit" 
-          disabled={loading}
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition font-medium mt-6 disabled:opacity-50"
-        >
-          {loading ? 'Submitting...' : 'Submit Listing'}
-        </button>
-      </form>
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Quality Grade</label>
+            <div className="grid grid-cols-3 gap-2">
+              {['Grade A', 'Grade B', 'Grade C'].map(grade => (
+                <div 
+                  key={grade}
+                  className={`border rounded py-2 text-center text-sm font-medium cursor-pointer ${formData.qualityGrade === grade ? 'border-white text-white' : 'border-gray-600 text-gray-400'}`}
+                  onClick={() => setFormData({...formData, qualityGrade: grade})}
+                >
+                  {grade}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Pickup Location*</label>
+            <input 
+              type="text" 
+              name="pickupLocation"
+              value={formData.pickupLocation} 
+              onChange={handleChange}
+              className="w-full bg-transparent border border-gray-600 rounded p-3 text-white focus:border-white focus:outline-none"
+              placeholder="e.g. Thanjavur"
+              required 
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-gray-300 mb-2">Price (₹)*</label>
+            <input 
+              type="number" 
+              name="fixedPrice"
+              value={formData.fixedPrice} 
+              onChange={handleChange}
+              className="w-full bg-transparent border border-gray-600 rounded p-3 text-white focus:border-white focus:outline-none"
+              placeholder="e.g. 2500"
+              required 
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            className="w-full bg-white text-black font-bold py-4 rounded text-lg mt-8 mb-4 hover:bg-gray-200"
+          >
+            Post Ad
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

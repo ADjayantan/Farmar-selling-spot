@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import Layout from './components/Layout';
@@ -11,6 +11,7 @@ import AuctionManagement from './pages/AuctionManagement';
 import Orders from './pages/Orders';
 import DeliveryTracking from './pages/DeliveryTracking';
 import Profile from './pages/Profile';
+import Chats from './pages/Chats';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="create-listing" element={<CreateListing />} />
         <Route path="listings" element={<MyListings />} />
+        <Route path="chats" element={<Chats />} />
         <Route path="auction/:id" element={<AuctionManagement />} />
         <Route path="orders" element={<Orders />} />
         <Route path="orders/:id/tracking" element={<DeliveryTracking />} />

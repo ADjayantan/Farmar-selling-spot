@@ -1,66 +1,129 @@
 import React from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { Home, List, ShoppingBag, User } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
-import { useAuth } from '../context/AuthContext';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Search, ChevronDown, MessageSquare, Bell, User, Plus, Heart } from 'lucide-react';
 
 const Layout: React.FC = () => {
-  const { t } = useLanguage();
-  const { logout } = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  const location = useLocation();
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 pb-16 md:pb-0 md:pt-16">
-      {/* Mobile Header */}
-      <header className="bg-green-600 text-white p-4 flex justify-between items-center md:fixed md:top-0 md:w-full md:z-10">
-        <h1 className="text-xl font-bold">Farm-O-Connect</h1>
-        <button onClick={handleLogout} className="text-sm bg-green-700 px-3 py-1 rounded">
-          Logout
-        </button>
-      </header>
+    <div className="flex flex-col min-h-screen bg-[#121212] text-white">
+      {/* OLX-Style Desktop Top Navbar */}
+      <div className="bg-[#121212] sticky top-0 z-50 border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center space-x-4">
+          
+          {/* Logo */}
+          <div 
+            className="flex items-center cursor-pointer mr-2"
+            onClick={() => navigate('/dashboard')}
+          >
+            <span className="text-3xl mr-2">🌾</span>
+            <h1 className="text-2xl font-black tracking-tight text-white hidden lg:block">Farm'o Connect</h1>
+          </div>
 
-      <main className="flex-1 p-4 overflow-y-auto">
-        <Outlet />
-      </main>
+          {/* Location Dropdown */}
+          <div className="hidden md:flex items-center bg-[#1e1e1e] border-2 border-white rounded px-3 py-2.5 w-64">
+            <Search size={20} className="text-white mr-2" />
+            <input 
+              type="text" 
+              placeholder="India" 
+              className="bg-transparent outline-none flex-1 text-white placeholder-gray-400 font-bold text-sm"
+              defaultValue="Tamil Nadu"
+            />
+            <ChevronDown size={24} className="text-white ml-2 cursor-pointer" />
+          </div>
 
-      {/* Bottom Navigation for Mobile / Top Nav for Desktop (simplified for demo as bottom nav) */}
-      <nav className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-2 md:top-0 md:bottom-auto md:w-auto md:right-0 md:border-t-0 md:bg-transparent md:text-white md:p-4">
-        <NavLink 
-          to="/dashboard" 
-          className={({ isActive }) => `flex flex-col items-center p-2 ${isActive ? 'text-green-600' : 'text-gray-500'} md:text-white md:mx-2`}
-        >
-          <Home size={24} />
-          <span className="text-xs mt-1 md:hidden">{t('dashboard')}</span>
-        </NavLink>
-        <NavLink 
-          to="/listings" 
-          className={({ isActive }) => `flex flex-col items-center p-2 ${isActive ? 'text-green-600' : 'text-gray-500'} md:text-white md:mx-2`}
-        >
-          <List size={24} />
-          <span className="text-xs mt-1 md:hidden">{t('myListings')}</span>
-        </NavLink>
-        <NavLink 
-          to="/orders" 
-          className={({ isActive }) => `flex flex-col items-center p-2 ${isActive ? 'text-green-600' : 'text-gray-500'} md:text-white md:mx-2`}
-        >
-          <ShoppingBag size={24} />
-          <span className="text-xs mt-1 md:hidden">{t('orders')}</span>
-        </NavLink>
-        <NavLink 
-          to="/profile" 
-          className={({ isActive }) => `flex flex-col items-center p-2 ${isActive ? 'text-green-600' : 'text-gray-500'} md:text-white md:mx-2`}
-        >
+          {/* Main Search Bar */}
+          <div className="hidden md:flex flex-1 items-center bg-[#121212] border-2 border-white rounded">
+            <input 
+              type="text" 
+              placeholder="Find Tractors, Crops and more..." 
+              className="bg-transparent outline-none flex-1 text-white placeholder-gray-400 px-4 py-2.5 text-base"
+            />
+            <div 
+              className="bg-white p-2.5 px-4 cursor-pointer hover:bg-gray-200 transition"
+              onClick={() => alert('Search feature coming soon!')}
+            >
+              <Search size={24} className="text-[#121212] font-black" />
+            </div>
+          </div>
+
+          {/* Right Actions */}
+          <div className="flex items-center space-x-6 pl-4">
+            <div className="hidden lg:flex font-bold text-sm cursor-pointer hover:text-gray-300 uppercase tracking-widest">
+              English
+            </div>
+            <div className="cursor-pointer hover:text-gray-300 relative" onClick={() => navigate('/chats')}>
+              <MessageSquare size={24} />
+              <div className="absolute -top-1 -right-1 bg-blue-600 text-xs w-4 h-4 flex items-center justify-center rounded-full font-bold">2</div>
+            </div>
+            <div className="cursor-pointer hover:text-gray-300 hidden sm:block">
+              <Bell size={24} />
+            </div>
+            <div className="cursor-pointer flex items-center hover:text-gray-300" onClick={() => navigate('/profile')}>
+              <User size={24} className="mr-1" />
+              <ChevronDown size={16} />
+            </div>
+            
+            {/* Sell Button */}
+            <button 
+              onClick={() => navigate('/create-listing')} 
+              className="border-[5px] border-t-cyan-400 border-l-yellow-400 border-r-blue-500 border-b-yellow-400 bg-white text-black px-5 py-1 rounded-full font-black tracking-widest shadow-lg flex items-center hover:scale-105 transition-transform"
+            >
+              <Plus size={20} className="mr-1 font-black" strokeWidth={3} /> SELL
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary Categories Bar (OLX Style) */}
+      <div className="border-b border-gray-800 bg-[#121212] hidden md:block shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-2 text-[13px] font-semibold flex items-center space-x-6 text-gray-300">
+          <span className="font-bold text-white flex items-center cursor-pointer uppercase tracking-wider hover:text-gray-300 transition">
+            All Categories <ChevronDown size={18} className="ml-1 font-black"/>
+          </span>
+          <span className="cursor-pointer hover:text-white transition">Tractors</span>
+          <span className="cursor-pointer hover:text-white transition">Crops & Veggies</span>
+          <span className="cursor-pointer hover:text-white transition">Commercial Vehicles</span>
+          <span className="cursor-pointer hover:text-white transition">Agricultural Land</span>
+          <span className="cursor-pointer hover:text-white transition">Seeds & Fertilizers</span>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 w-full bg-[#121212]">
+        <div className="max-w-7xl mx-auto w-full h-full">
+          <Outlet />
+        </div>
+      </div>
+
+      {/* Mobile Bottom Navigation (Only visible on small screens) */}
+      <div className="md:hidden fixed bottom-0 w-full bg-[#121212] border-t border-gray-800 px-4 py-3 flex justify-between items-center z-50">
+        <div onClick={() => navigate('/dashboard')} className={`flex flex-col items-center ${location.pathname.includes('/dashboard') ? 'text-white' : 'text-gray-500'}`}>
+          <Search size={24} />
+          <span className="text-[10px] font-bold mt-1">HOME</span>
+        </div>
+        <div onClick={() => navigate('/chats')} className={`flex flex-col items-center ${location.pathname.includes('/chats') ? 'text-white' : 'text-gray-500'}`}>
+          <MessageSquare size={24} />
+          <span className="text-[10px] font-bold mt-1">CHATS</span>
+        </div>
+        <div onClick={() => navigate('/create-listing')} className="relative -top-5">
+           <div className="border-[4px] border-t-cyan-400 border-l-yellow-400 border-r-blue-500 border-b-yellow-400 bg-white text-black p-3 rounded-full shadow-lg">
+             <Plus size={24} strokeWidth={3} />
+           </div>
+        </div>
+        <div onClick={() => navigate('/listings')} className={`flex flex-col items-center ${location.pathname.includes('/listings') ? 'text-white' : 'text-gray-500'}`}>
+          <Heart size={24} />
+          <span className="text-[10px] font-bold mt-1">MY ADS</span>
+        </div>
+        <div onClick={() => navigate('/profile')} className={`flex flex-col items-center ${location.pathname.includes('/profile') ? 'text-white' : 'text-gray-500'}`}>
           <User size={24} />
-          <span className="text-xs mt-1 md:hidden">{t('profile')}</span>
-        </NavLink>
-      </nav>
+          <span className="text-[10px] font-bold mt-1">ACCOUNT</span>
+        </div>
+      </div>
     </div>
   );
 };
+
 
 export default Layout;

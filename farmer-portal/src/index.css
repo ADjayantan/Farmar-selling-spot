@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2E7D32;
-  --color-secondary: #F57F17;
-  --color-background: #f8f9fa;
-  --color-surface: #ffffff;
+  --color-primary: #3b82f6; /* Blue accent */
+  --color-secondary: #facc15; /* Yellow for the plus button */
+  --color-background: #121212; /* Dark background from screenshot */
+  --color-surface: #1e1e1e; /* Slightly lighter dark for cards */
+  --color-text-main: #ffffff;
+  --color-text-muted: #a1a1aa;
 }
 
 @layer base {
   body {
     background-color: var(--color-background);
-    color: #111827;
+    color: var(--color-text-main);
+    font-family: system-ui, -apple-system, sans-serif;
   }
 }

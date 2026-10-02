@@ -1,66 +1,93 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { User, Mail, Shield, LogOut } from 'lucide-react';
+import { MapPin, Phone, Settings, HelpCircle, LogOut, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {
   const { user, logout } = useAuth();
-  const { t, language, setLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const menuItems = [
+    { icon: Settings, label: 'Settings' },
+    { icon: HelpCircle, label: 'Help & Support' },
+    { icon: LogOut, label: 'Logout', onClick: handleLogout, color: 'text-red-500' }
+  ];
 
   return (
-    <div className="max-w-md mx-auto space-y-6">
-      <h2 className="text-2xl font-bold text-gray-800">{t('profile')}</h2>
-      
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="bg-green-600 p-6 flex flex-col items-center">
-          <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4">
-            <User size={48} className="text-green-600" />
-          </div>
-          <h3 className="text-xl font-bold text-white">{user?.name || 'Farmer User'}</h3>
-          <p className="text-green-100">{user?.role || 'FARMER'}</p>
-        </div>
-        
-        <div className="p-6 space-y-4">
-          <div className="flex items-center">
-            <Mail size={20} className="text-gray-400 mr-3" />
-            <div>
-              <p className="text-sm text-gray-500">Email</p>
-              <p className="font-medium text-gray-900">{user?.email || 'farmer@demo.com'}</p>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <Shield size={20} className="text-gray-400 mr-3" />
-            <div>
-              <p className="text-sm text-gray-500">Account Type</p>
-              <p className="font-medium text-gray-900 capitalize">Verified Farmer</p>
-            </div>
-          </div>
-          
-          <div className="pt-4 border-t border-gray-100">
-            <p className="text-sm font-medium text-gray-700 mb-3">Language Preference</p>
-            <div className="flex space-x-3">
-              <button 
-                onClick={() => setLanguage('en')}
-                className={`flex-1 py-2 rounded border ${language === 'en' ? 'bg-green-50 border-green-500 text-green-700' : 'border-gray-300 text-gray-600'}`}
-              >
-                English
-              </button>
-              <button 
-                onClick={() => setLanguage('ta')}
-                className={`flex-1 py-2 rounded border ${language === 'ta' ? 'bg-green-50 border-green-500 text-green-700' : 'border-gray-300 text-gray-600'}`}
-              >
-                தமிழ்
-              </button>
-            </div>
-          </div>
+    <div className="flex flex-col min-h-screen bg-[#121212] text-white">
+      {/* Header */}
+      <div className="bg-[#1e1e1e] p-4 font-bold border-b border-gray-800 text-lg">
+        Account
+      </div>
 
-          <button 
-            onClick={logout}
-            className="w-full flex items-center justify-center space-x-2 mt-6 py-2 border border-red-200 text-red-600 rounded hover:bg-red-50 transition"
-          >
-            <LogOut size={18} />
-            <span>Logout</span>
-          </button>
+      <div className="flex-1 overflow-y-auto">
+        {/* Profile Card */}
+        <div className="p-4 flex items-center border-b border-gray-800 bg-[#1e1e1e] mt-4">
+          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-4xl mr-4 shadow-lg">
+            🧑‍🌾
+          </div>
+          <div className="flex-1">
+            <h2 className="text-xl font-bold">{user?.name || 'Farmer Demo'}</h2>
+            <p className="text-gray-400 text-sm mt-1">{user?.email || 'farmer@demo.com'}</p>
+            <button className="mt-2 text-blue-500 text-sm font-bold">View and edit profile</button>
+          </div>
+        </div>
+
+        {/* Info list */}
+        <div className="bg-[#1e1e1e] mt-4 border-t border-b border-gray-800">
+          <div className="p-4 flex items-center justify-between border-b border-gray-800">
+            <div className="flex items-center text-gray-300">
+              <Phone size={20} className="mr-3" />
+              <span>{(user as any)?.phone || '+91 9876543210'}</span>
+            </div>
+          </div>
+          <div className="p-4 flex items-center justify-between border-b border-gray-800">
+            <div className="flex items-center text-gray-300">
+              <MapPin size={20} className="mr-3" />
+              <span>{(user as any)?.location || 'Tamil Nadu, India'}</span>
+            </div>
+          </div>
+          <div className="p-4 flex items-center justify-between">
+            <div className="flex items-center text-gray-300">
+              <span className="font-bold mr-3 text-lg">A/अ</span>
+              <span>Language</span>
+            </div>
+            <select 
+              className="bg-transparent text-blue-500 font-bold outline-none cursor-pointer text-right appearance-none"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as 'en' | 'ta')}
+            >
+              <option value="en" className="bg-gray-800 text-white">English</option>
+              <option value="ta" className="bg-gray-800 text-white">தமிழ்</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Menu list */}
+        <div className="bg-[#1e1e1e] mt-4 border-t border-gray-800 mb-24">
+          {menuItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div 
+                key={index} 
+                className="p-4 flex items-center justify-between border-b border-gray-800 cursor-pointer hover:bg-[#2a2a2a]"
+                onClick={item.onClick}
+              >
+                <div className="flex items-center">
+                  <Icon size={20} className={`mr-3 ${item.color || 'text-gray-300'}`} />
+                  <span className={`${item.color || 'text-gray-300'}`}>{item.label}</span>
+                </div>
+                {!item.color && <ChevronRight size={20} className="text-gray-600" />}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
