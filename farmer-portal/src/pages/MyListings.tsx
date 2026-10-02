@@ -3,10 +3,10 @@ import api from '../services/api';
 import { Heart, Eye, MoreHorizontal } from 'lucide-react';
 
 const mockListings = [
-  { _id: '1', cropName: 'Premium Ponni Rice', quantity: 20, unit: 'quintal', sellingMode: 'AUCTION', auctionBasePrice: 2200, fixedPrice: 0, status: 'LIVE', createdAt: new Date().toISOString(), photos: ['https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80'] },
-  { _id: '2', cropName: 'Organic Tomatoes', quantity: 500, unit: 'kg', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 45, status: 'ACTIVE', createdAt: new Date().toISOString(), photos: ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&q=80'] },
-  { _id: '3', cropName: 'Fresh Coconuts', quantity: 1000, unit: 'kg', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 25, status: 'SOLD', createdAt: new Date(Date.now() - 7*24*60*60*1000).toISOString(), photos: ['https://images.unsplash.com/photo-1582285121323-96b4f738b5ce?w=200&q=80'] },
-  { _id: '4', cropName: 'Basmati Rice', quantity: 10, unit: 'quintal', sellingMode: 'AUCTION', auctionBasePrice: 3500, fixedPrice: 0, status: 'EXPIRED', createdAt: new Date(Date.now() - 30*24*60*60*1000).toISOString(), photos: ['https://images.unsplash.com/photo-1595039239855-4682054ff143?w=200&q=80'] },
+  { _id: '1', cropName: 'Premium Ponni Rice', quantity: 20, unit: 'quintal', sellingMode: 'AUCTION', auctionBasePrice: 2200, fixedPrice: 0, status: 'LIVE', createdAt: new Date().toISOString(), photos: ['./images/rice.png'] },
+  { _id: '2', cropName: 'Organic Tomatoes', quantity: 500, unit: 'kg', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 45, status: 'ACTIVE', createdAt: new Date().toISOString(), photos: ['./images/seeds.png'] },
+  { _id: '3', cropName: 'Used Tractor', quantity: 1, unit: 'unit', sellingMode: 'FIXED_PRICE', auctionBasePrice: 0, fixedPrice: 250000, status: 'SOLD', createdAt: new Date(Date.now() - 7*24*60*60*1000).toISOString(), photos: ['./images/tractor.png'] },
+  { _id: '4', cropName: 'Agricultural Land', quantity: 5, unit: 'acre', sellingMode: 'AUCTION', auctionBasePrice: 3500000, fixedPrice: 0, status: 'EXPIRED', createdAt: new Date(Date.now() - 30*24*60*60*1000).toISOString(), photos: ['./images/land.png'] },
 ];
 
 const MyListings: React.FC = () => {

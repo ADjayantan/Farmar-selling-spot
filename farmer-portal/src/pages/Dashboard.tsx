@@ -1,26 +1,26 @@
 import React from 'react';
-import { MapPin, Search, Mic, Heart, Bell, ChevronDown } from 'lucide-react';
+import { MapPin, Search, Mic, Heart, Bell, ChevronDown, Wheat, Tractor, Sprout, Truck, FlaskConical, Settings, PawPrint, Building } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const categories = [
-    { id: 1, name: 'Crops & Veggies', icon: '🌾' },
-    { id: 2, name: 'Tractors', icon: '🚜' },
-    { id: 3, name: 'Seeds', icon: '🌱' },
-    { id: 4, name: 'Transport', icon: '🚚' },
-    { id: 5, name: 'Fertilizers', icon: '🧪' },
-    { id: 6, name: 'Machinery', icon: '⚙️' },
-    { id: 7, name: 'Livestock', icon: '🐄' },
-    { id: 8, name: 'Properties', icon: '🏠' },
+    { id: 1, name: 'Crops & Veggies', icon: <Wheat size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-green-400 to-emerald-600 shadow-emerald-900/30' },
+    { id: 2, name: 'Tractors', icon: <Tractor size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-orange-400 to-red-600 shadow-red-900/30' },
+    { id: 3, name: 'Seeds', icon: <Sprout size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-lime-400 to-green-500 shadow-green-900/30' },
+    { id: 4, name: 'Transport', icon: <Truck size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-blue-400 to-indigo-600 shadow-indigo-900/30' },
+    { id: 5, name: 'Fertilizers', icon: <FlaskConical size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-purple-400 to-fuchsia-600 shadow-fuchsia-900/30' },
+    { id: 6, name: 'Machinery', icon: <Settings size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-gray-400 to-slate-600 shadow-slate-900/30' },
+    { id: 7, name: 'Livestock', icon: <PawPrint size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-yellow-400 to-orange-500 shadow-orange-900/30' },
+    { id: 8, name: 'Properties', icon: <Building size={36} className="text-white drop-shadow-md" strokeWidth={1.5} />, bg: 'bg-gradient-to-br from-teal-400 to-cyan-600 shadow-cyan-900/30' },
   ];
 
   const recommendations = [
-    { id: 101, title: 'Premium Ponni Rice - 50 Quintals', price: '₹ 1,10,000', location: 'Thanjavur, Tamil Nadu', year: 'Harvest 2026', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=300&q=80' },
-    { id: 102, title: 'Mahindra Tractor 575 DI SP Plus', price: '₹ 5,25,000', location: 'Tirupur Somanur Road', year: '2022 - 1,200 hrs', image: 'https://images.unsplash.com/photo-1592837965902-1249b67362d2?auto=format&fit=crop&w=300&q=80' },
-    { id: 103, title: 'Organic Tomato Seeds', price: '₹ 1,500', location: 'Coimbatore', year: 'New', image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80' },
-    { id: 104, title: 'Agricultural Land - 5 Acres', price: '₹ 45,00,000', location: 'Pollachi', year: 'Ready to use', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=300&q=80' },
+    { id: 101, title: 'Premium Ponni Rice - 50 Quintals', price: '₹ 1,10,000', location: 'Thanjavur, Tamil Nadu', year: 'Harvest 2026', image: './images/rice.png' },
+    { id: 102, title: 'Mahindra Tractor 575 DI SP Plus', price: '₹ 5,25,000', location: 'Tirupur Somanur Road', year: '2022 - 1,200 hrs', image: './images/tractor.png' },
+    { id: 103, title: 'Organic Tomato Seeds', price: '₹ 1,500', location: 'Coimbatore', year: 'New', image: './images/seeds.png' },
+    { id: 104, title: 'Agricultural Land - 5 Acres', price: '₹ 45,00,000', location: 'Pollachi', year: 'Ready to use', image: './images/land.png' },
   ];
 
   return (
@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
         <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-3 gap-y-4">
           {categories.map((cat) => (
             <div key={cat.id} className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform" onClick={() => alert(`Opening category: ${cat.name}`)}>
-              <div className="w-full aspect-square max-w-[80px] bg-[#2a2b2f] rounded-2xl flex items-center justify-center text-3xl md:text-4xl mb-2 shadow-sm border border-gray-800">
+              <div className={`w-full aspect-square max-w-[80px] rounded-2xl flex items-center justify-center mb-2 shadow-lg ${cat.bg}`}>
                 {cat.icon}
               </div>
               <span className="text-[11px] md:text-xs text-[#e0e0e0] text-center font-semibold leading-tight tracking-wide">{cat.name}</span>
