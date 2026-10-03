@@ -34,6 +34,26 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Live Market Ticker */}
+        <div className="px-4 mb-6">
+          <div className="bg-white rounded-lg p-3 border border-gray-200 shadow-sm flex items-center overflow-hidden whitespace-nowrap relative">
+            <div className="bg-orange-100 text-orange-800 px-3 py-1.5 rounded text-xs font-black uppercase tracking-wider mr-4 flex-shrink-0 z-10 shadow-sm border border-orange-200 flex items-center">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-2"></span> Live Rates
+            </div>
+            <div className="animate-[marquee_20s_linear_infinite] inline-flex space-x-8 text-sm font-bold text-gray-700">
+              <span>🌾 Ponni Rice: ₹ 55/kg <span className="text-green-600">▲</span></span>
+              <span>🍅 Tomato: ₹ 20/kg <span className="text-red-500">▼</span></span>
+              <span>🧅 Onion: ₹ 45/kg <span className="text-green-600">▲</span></span>
+              <span>🍌 Banana: ₹ 30/kg <span className="text-gray-400">-</span></span>
+              <span>🥔 Potato: ₹ 35/kg <span className="text-green-600">▲</span></span>
+              <span>🥕 Carrot: ₹ 60/kg <span className="text-red-500">▼</span></span>
+              <span>🌾 Ponni Rice: ₹ 55/kg <span className="text-green-600">▲</span></span>
+              <span>🍅 Tomato: ₹ 20/kg <span className="text-red-500">▼</span></span>
+              <span>🧅 Onion: ₹ 45/kg <span className="text-green-600">▲</span></span>
+            </div>
+          </div>
+        </div>
+
         {/* Categories Grid */}
         <div className="px-4 py-2 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Browse Categories</h2>

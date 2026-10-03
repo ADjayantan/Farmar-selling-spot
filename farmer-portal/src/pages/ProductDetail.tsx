@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MapPin, ArrowLeft, Share2, Heart, MessageSquare, Phone } from 'lucide-react';
-import { getProductById } from '../data/mockProducts';
+import { getProductById, getProductsByCategory } from '../data/mockProducts';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
   const product = getProductById(id || '') || {
-    title: 'Unknown Product',
+    id: '0', categoryId: 0, title: 'Unknown Product',
     price: '? 0',
     location: 'Unknown Location',
     year: 'N/A',
@@ -97,10 +97,39 @@ const ProductDetail: React.FC = () => {
             </ul>
           </div>
         </div>
-
       </div>
+
+      {/* Similar Products */}
+      {product.categoryId && (
+        <div className="max-w-5xl mx-auto w-full p-4 mt-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Similar Products</h2>
+          <div className="flex overflow-x-auto gap-4 pb-4 snap-x hide-scrollbar">
+            {getProductsByCategory(product.categoryId).filter((p: any) => p.id !== product.id).slice(0, 10).map((item: any) => (
+              <div 
+                key={item.id} 
+                className="min-w-[200px] max-w-[200px] bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow snap-start flex-shrink-0"
+                onClick={() => navigate(`/product/${item.id}`)}
+              >
+                <div className="h-28 bg-gray-100 overflow-hidden">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                </div>
+                <div className="p-3">
+                  <h3 className="font-extrabold text-gray-900 text-sm truncate">{item.price}</h3>
+                  <p className="text-xs text-gray-600 truncate mt-1">{item.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Spacing for mobile nav */}
+      <div className="h-20"></div>
+
     </div>
   );
 };
 
 export default ProductDetail;
+
+

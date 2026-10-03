@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { MapPin, Phone, Settings, HelpCircle, LogOut, ChevronRight } from 'lucide-react';
+import { MapPin, Phone, Settings, HelpCircle, LogOut, ChevronRight, User, Star, Package, TrendingUp, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {
@@ -15,83 +15,111 @@ const Profile: React.FC = () => {
   };
 
   const menuItems = [
-    { icon: Settings, label: 'Settings' },
-    { icon: HelpCircle, label: 'Help & Support' },
-    { icon: LogOut, label: 'Logout', onClick: handleLogout, color: 'text-red-500' }
+    { icon: Package, label: 'My Ads & Orders', onClick: () => navigate('/listings') },
+    { icon: Settings, label: 'Account Settings', onClick: () => {} },
+    { icon: ShieldCheck, label: 'Privacy & Security', onClick: () => {} },
+    { icon: HelpCircle, label: 'Help & Support', onClick: () => {} },
+    { icon: LogOut, label: 'Logout', onClick: handleLogout, color: 'text-red-600' }
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212] text-white">
-      {/* Header */}
-      <div className="bg-[#1e1e1e] p-4 font-bold border-b border-gray-800 text-lg">
-        Account
+    <div className="min-h-screen bg-[#f4f8f4] text-gray-800 font-sans pb-20">
+      <div className="bg-white p-4 flex items-center border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+        <h1 className="text-xl font-bold text-gray-900 mx-auto">My Profile</h1>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="max-w-3xl mx-auto p-4 space-y-6 mt-4">
+        
         {/* Profile Card */}
-        <div className="p-4 flex items-center border-b border-gray-800 bg-[#1e1e1e] mt-4">
-          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-4xl mr-4 shadow-lg">
-            🧑‍🌾
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center space-x-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-bl-full -z-0"></div>
+          
+          <div className="w-24 h-24 bg-gradient-to-br from-green-600 to-emerald-700 rounded-full flex items-center justify-center border-4 border-white shadow-md z-10 relative">
+            <span className="text-4xl font-bold text-white">{user?.name?.charAt(0) || 'F'}</span>
+            <div className="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center">
+              <ShieldCheck size={12} className="text-white" />
+            </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold">{user?.name || 'Farmer Demo'}</h2>
-            <p className="text-gray-400 text-sm mt-1">{user?.email || 'farmer@demo.com'}</p>
-            <button className="mt-2 text-blue-500 text-sm font-bold">View and edit profile</button>
+          
+          <div className="z-10 flex-1">
+            <h2 className="text-2xl font-extrabold text-gray-900">{user?.name || 'Farmer Account'}</h2>
+            <div className="flex items-center text-sm text-gray-500 mt-1 font-medium">
+              <Phone size={14} className="mr-1" /> {(user as any)?.phone || '+91 98765 43210'}
+            </div>
+            <div className="flex items-center text-sm text-gray-500 mt-1 font-medium">
+              <MapPin size={14} className="mr-1" /> Coimbatore, Tamil Nadu
+            </div>
+          </div>
+
+          <button className="text-green-700 font-bold text-sm bg-green-50 px-4 py-2 rounded-full hover:bg-green-100 transition-colors border border-green-200 z-10">
+            Edit
+          </button>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-2">
+              <TrendingUp size={20} />
+            </div>
+            <span className="text-2xl font-black text-gray-900">12</span>
+            <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Ads Sold</span>
+          </div>
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center mb-2">
+              <Star size={20} fill="currentColor" />
+            </div>
+            <span className="text-2xl font-black text-gray-900">4.8</span>
+            <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Rating</span>
+          </div>
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-2">
+              <User size={20} />
+            </div>
+            <span className="text-2xl font-black text-gray-900">1.2k</span>
+            <span className="text-xs text-gray-500 font-bold uppercase tracking-wider mt-1">Followers</span>
           </div>
         </div>
 
-        {/* Info list */}
-        <div className="bg-[#1e1e1e] mt-4 border-t border-b border-gray-800">
-          <div className="p-4 flex items-center justify-between border-b border-gray-800">
-            <div className="flex items-center text-gray-300">
-              <Phone size={20} className="mr-3" />
-              <span>{(user as any)?.phone || '+91 9876543210'}</span>
-            </div>
-          </div>
-          <div className="p-4 flex items-center justify-between border-b border-gray-800">
-            <div className="flex items-center text-gray-300">
-              <MapPin size={20} className="mr-3" />
-              <span>{(user as any)?.location || 'Tamil Nadu, India'}</span>
-            </div>
-          </div>
-          <div className="p-4 flex items-center justify-between">
-            <div className="flex items-center text-gray-300">
-              <span className="font-bold mr-3 text-lg">A/अ</span>
-              <span>Language</span>
-            </div>
-            <select 
-              className="bg-transparent text-blue-500 font-bold outline-none cursor-pointer text-right appearance-none"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as 'en' | 'ta')}
+        {/* Settings Menu */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          {menuItems.map((item, idx) => (
+            <div 
+              key={idx} 
+              className={`flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors ${idx !== menuItems.length - 1 ? 'border-b border-gray-100' : ''}`}
+              onClick={item.onClick}
             >
-              <option value="en" className="bg-gray-800 text-white">English</option>
-              <option value="ta" className="bg-gray-800 text-white">தமிழ்</option>
-            </select>
-          </div>
+              <div className="flex items-center space-x-4">
+                <div className={`p-2 rounded-lg ${item.color ? 'bg-red-50' : 'bg-gray-100'}`}>
+                  <item.icon size={20} className={item.color || 'text-gray-700'} />
+                </div>
+                <span className={`font-bold ${item.color || 'text-gray-800'}`}>{item.label}</span>
+              </div>
+              <ChevronRight size={20} className="text-gray-300" />
+            </div>
+          ))}
         </div>
 
-        {/* Menu list */}
-        <div className="bg-[#1e1e1e] mt-4 border-t border-gray-800 mb-24">
-          {menuItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div 
-                key={index} 
-                className="p-4 flex items-center justify-between border-b border-gray-800 cursor-pointer hover:bg-[#2a2a2a]"
-                onClick={item.onClick}
-              >
-                <div className="flex items-center">
-                  <Icon size={20} className={`mr-3 ${item.color || 'text-gray-300'}`} />
-                  <span className={`${item.color || 'text-gray-300'}`}>{item.label}</span>
-                </div>
-                {!item.color && <ChevronRight size={20} className="text-gray-600" />}
-              </div>
-            );
-          })}
+        {/* Language Selection */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex justify-between items-center">
+          <div>
+            <h3 className="font-bold text-gray-900">Language</h3>
+            <p className="text-sm text-gray-500 mt-1">Change your app language</p>
+          </div>
+          <select 
+            value={language}
+            onChange={(e) => setLanguage(e.target.value as 'en' | 'ta')}
+            className="bg-gray-50 border border-gray-200 text-gray-900 font-bold text-sm rounded-lg p-2.5 outline-none focus:ring-green-500 focus:border-green-500"
+          >
+            <option value="en">English</option>
+            <option value="ta">தமிழ்</option>
+          </select>
         </div>
+        
       </div>
     </div>
   );
 };
 
 export default Profile;
+
