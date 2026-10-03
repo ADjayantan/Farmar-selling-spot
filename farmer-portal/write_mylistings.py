@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+content = r'''import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import { Heart, Eye, MoreHorizontal } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ const MyListings: React.FC = () => {
 
   const markAsSold = async (id: string) => {
     try {
-      await api.patch(`/listings/${id}`, { status: 'SOLD' });
+      await api.patch(/listings/, { status: 'SOLD' });
       fetchListings();
     } catch {
       setListings(prev => prev.map(l => l._id === id ? { ...l, status: 'SOLD' } : l));
@@ -53,18 +53,18 @@ const MyListings: React.FC = () => {
                 <MoreHorizontal size={16} />
               </div>
 
-              <div className="p-3 flex items-start space-x-4 cursor-pointer" onClick={() => navigate(`/product/${item._id}`)}>
+              <div className="p-3 flex items-start space-x-4 cursor-pointer" onClick={() => navigate(/product/)}>
                 <div className="w-20 h-20 bg-gray-800 rounded-md overflow-hidden flex-shrink-0 flex items-center justify-center text-3xl">
                   {item.photos && item.photos.length > 0 ? (
                     <img src={item.photos[0]} alt="thumbnail" className="w-full h-full object-cover" />
                   ) : (
-                    '🌾'
+                    '??'
                   )}
                 </div>
                 <div className="flex-1">
                   <h3 className="text-sm font-bold text-gray-200 line-clamp-1">{item.cropName} - {item.quantity} {item.unit}</h3>
                   <p className="text-lg font-bold text-white mt-1">
-                    ₹ {item.sellingMode === 'AUCTION' ? item.auctionBasePrice?.toLocaleString() : item.fixedPrice?.toLocaleString()}
+                    ? {item.sellingMode === 'AUCTION' ? item.auctionBasePrice?.toLocaleString() : item.fixedPrice?.toLocaleString()}
                   </p>
                   <div className="flex items-center space-x-6 mt-2 text-xs text-gray-500 font-semibold">
                     <div className="flex items-center space-x-1">
@@ -81,11 +81,7 @@ const MyListings: React.FC = () => {
 
               <div className="p-3 border-t border-gray-800 bg-[#1a1a1a]">
                 <div className="flex mb-2">
-                  <span className={`text-[10px] font-bold px-2 py-1 rounded ${
-                    item.status === 'SOLD' ? 'bg-green-600' :
-                    item.status === 'EXPIRED' ? 'bg-red-600' :
-                    item.status === 'LIVE' ? 'bg-blue-600' : 'bg-yellow-600 text-black'
-                  }`}>
+                  <span className={	ext-[10px] font-bold px-2 py-1 rounded }>
                     {item.status}
                   </span>
                 </div>
@@ -119,3 +115,6 @@ const MyListings: React.FC = () => {
 };
 
 export default MyListings;
+'''
+with open('src/pages/MyListings.tsx', 'w', encoding='utf-8') as f:
+    f.write(content.replace('', '\\').replace('\\', ''))

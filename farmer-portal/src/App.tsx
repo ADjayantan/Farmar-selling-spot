@@ -12,6 +12,7 @@ import Orders from './pages/Orders';
 import DeliveryTracking from './pages/DeliveryTracking';
 import Profile from './pages/Profile';
 import Chats from './pages/Chats';
+import ProductDetail from './pages/ProductDetail';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -29,6 +30,7 @@ const AppRoutes = () => {
         <Route path="create-listing" element={<CreateListing />} />
         <Route path="listings" element={<MyListings />} />
         <Route path="chats" element={<Chats />} />
+        <Route path="product/:id" element={<ProductDetail />} />
         <Route path="auction/:id" element={<AuctionManagement />} />
         <Route path="orders" element={<Orders />} />
         <Route path="orders/:id/tracking" element={<DeliveryTracking />} />

@@ -37,7 +37,7 @@ const Layout: React.FC = () => {
           <div className="hidden md:flex flex-1 items-center bg-[#121212] border-2 border-white rounded">
             <input 
               type="text" 
-              placeholder="Find Tractors, Crops and more..." 
+              placeholder="Find Fruits, Vegetables and more..." 
               className="bg-transparent outline-none flex-1 text-white placeholder-gray-400 px-4 py-2.5 text-base"
             />
             <div 
@@ -82,11 +82,11 @@ const Layout: React.FC = () => {
           <span className="font-bold text-white flex items-center cursor-pointer uppercase tracking-wider hover:text-gray-300 transition">
             All Categories <ChevronDown size={18} className="ml-1 font-black"/>
           </span>
-          <span className="cursor-pointer hover:text-white transition">Tractors</span>
-          <span className="cursor-pointer hover:text-white transition">Crops & Veggies</span>
-          <span className="cursor-pointer hover:text-white transition">Commercial Vehicles</span>
-          <span className="cursor-pointer hover:text-white transition">Agricultural Land</span>
-          <span className="cursor-pointer hover:text-white transition">Seeds & Fertilizers</span>
+          <span className="cursor-pointer hover:text-white transition">Fresh Fruits</span>
+          <span className="cursor-pointer hover:text-white transition">Vegetables</span>
+          <span className="cursor-pointer hover:text-white transition">Organic Produce</span>
+          <span className="cursor-pointer hover:text-white transition">Spices</span>
+          <span className="cursor-pointer hover:text-white transition">Grains</span>
         </div>
       </div>
 
