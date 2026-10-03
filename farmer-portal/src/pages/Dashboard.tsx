@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Heart, Wheat, Sprout, Leaf, Trees, Droplets, Sun, ShoppingCart, Package } from 'lucide-react';
+import { MapPin, Heart, Wheat, Sprout, Leaf, Trees, Droplets, Sun, ShoppingCart, Package, CloudRain, Wind } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { mockProducts } from '../data/mockProducts';
 
@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
     <div className="flex flex-col bg-[#f4f8f4] min-h-screen">
       <div className="max-w-7xl mx-auto w-full">
         {/* Banner */}
-        <div className="px-4 py-6 cursor-pointer" onClick={() => alert('Boost Ads Details...')}>
+        <div className="px-4 py-6 cursor-pointer" onClick={() => navigate('/create-listing')}>
           <div className="bg-gradient-to-r from-green-700 to-emerald-600 rounded-xl p-6 flex justify-between items-center relative overflow-hidden shadow-lg">
             <div className="z-10">
               <h2 className="text-3xl font-extrabold text-white leading-tight tracking-tight mb-2">Sell your Harvest<br/>Faster & Better</h2>
@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
 
         {/* Live Market Ticker */}
         <div className="px-4 mb-6">
-          <div className="bg-white rounded-lg p-3 border border-gray-200 shadow-sm flex items-center overflow-hidden whitespace-nowrap relative">
+          <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm flex items-center overflow-hidden whitespace-nowrap relative">
             <div className="bg-orange-100 text-orange-800 px-3 py-1.5 rounded text-xs font-black uppercase tracking-wider mr-4 flex-shrink-0 z-10 shadow-sm border border-orange-200 flex items-center">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-2"></span> Live Rates
             </div>
@@ -54,12 +54,63 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Quick Dashboard Grid: Weather & Stats */}
+        <div className="px-4 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          
+          {/* Weather Widget */}
+          <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm p-4 text-white flex justify-between relative overflow-hidden">
+            <div className="z-10 flex flex-col justify-between h-full">
+              <div>
+                <p className="font-bold text-blue-100 text-xs uppercase tracking-widest">Coimbatore, TN</p>
+                <h3 className="text-3xl font-black mt-1">28°C</h3>
+                <p className="font-medium text-sm mt-0.5 flex items-center"><CloudRain size={14} className="mr-1" /> Light Showers</p>
+              </div>
+              <div className="mt-3 bg-white/20 rounded px-2 py-1 inline-flex items-center text-xs font-bold w-fit">
+                <Wind size={12} className="mr-1" /> 12 km/h Wind
+              </div>
+            </div>
+            <div className="z-10 flex flex-col items-end">
+              <Sun size={48} className="text-yellow-300 drop-shadow-md mb-2" />
+              <p className="text-xs font-bold text-blue-100 mt-auto">Rain likely at 4 PM</p>
+            </div>
+            <div className="absolute -right-4 -top-4 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
+          </div>
+
+          {/* Wallet / Earnings Widget */}
+          <div className="md:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-4 flex flex-col justify-between">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Earnings (This Month)</p>
+                <h3 className="text-3xl font-black text-green-700">₹ 42,500</h3>
+              </div>
+              <div className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded border border-green-200">
+                +12% vs last month
+              </div>
+            </div>
+            
+            <div className="flex space-x-4 mt-4">
+              <div className="flex-1 bg-gray-50 rounded-lg p-3 border border-gray-100">
+                <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Active Ads</p>
+                <p className="text-xl font-bold text-gray-900">12</p>
+              </div>
+              <div className="flex-1 bg-gray-50 rounded-lg p-3 border border-gray-100">
+                <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Pending Orders</p>
+                <p className="text-xl font-bold text-gray-900">4</p>
+              </div>
+              <div className="flex-1 bg-gray-50 rounded-lg p-3 border border-gray-100">
+                <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Profile Views</p>
+                <p className="text-xl font-bold text-gray-900">845</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Categories Grid */}
         <div className="px-4 py-2 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Browse Categories</h2>
           <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
             {categories.map((cat) => (
-              <div key={cat.id} className="flex flex-col items-center cursor-pointer group" onClick={() => alert(`Opening category: ${cat.name}`)}>
+              <div key={cat.id} className="flex flex-col items-center cursor-pointer group" onClick={() => navigate('/create-listing')}>
                 <div className={`w-full aspect-square max-w-[80px] rounded-2xl flex items-center justify-center mb-2 shadow-sm transition-all duration-300 group-hover:scale-105 ${cat.bg}`}>
                   {cat.icon}
                 </div>

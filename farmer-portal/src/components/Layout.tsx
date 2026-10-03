@@ -5,6 +5,7 @@ const Layout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -53,9 +54,7 @@ const Layout: React.FC = () => {
                   <MessageSquare size={24} />
                   <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-green-700"></span>
                 </button>
-                <button className="p-1 hover:bg-green-800 rounded-full transition-colors">
-                  <Bell size={24} />
-                </button>
+                <button className="relative p-1 hover:bg-green-800 rounded-full transition-colors" onClick={() => setShowNotifications(!showNotifications)}><Bell size={24} /><span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-orange-500 ring-2 ring-green-700 animate-pulse"></span></button>{showNotifications && (<div className="absolute top-14 right-10 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 text-left text-gray-900 font-sans"><div className="bg-gray-50 px-4 py-3 border-b border-gray-100 flex justify-between items-center"><h3 className="font-bold text-gray-800 text-sm">Notifications</h3><span className="text-[10px] text-green-700 font-bold bg-green-100 px-2 py-0.5 rounded uppercase tracking-wider">2 New</span></div><div className="max-h-80 overflow-y-auto divide-y divide-gray-100"><div className="p-4 hover:bg-gray-50 cursor-pointer bg-green-50/30 transition-colors"><p className="text-sm font-bold text-gray-900 mb-1">Raja Traders placed a Bid! <span>🎉</span></p><p className="text-xs text-gray-600 font-medium">₹52/kg on your Banana Auction.</p><p className="text-[10px] text-gray-400 font-bold mt-2">Just now</p></div><div className="p-4 hover:bg-gray-50 cursor-pointer bg-green-50/30 transition-colors"><p className="text-sm font-bold text-gray-900 mb-1">Order Out for Delivery <span>🚚</span></p><p className="text-xs text-gray-600 font-medium">ORD-9821 picked up by Suresh Transport.</p><p className="text-[10px] text-gray-400 font-bold mt-2">2 hours ago</p></div></div></div>)}
               </div>
 
               <div className="flex items-center space-x-2 cursor-pointer hover:bg-green-800 p-1.5 rounded-md transition-colors" onClick={() => navigate('/profile')}>
@@ -175,5 +174,9 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
+
+
+
+
 
 
