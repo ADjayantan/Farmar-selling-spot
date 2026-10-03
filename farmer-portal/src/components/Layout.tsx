@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Bell, MessageSquare, ChevronDown, Menu, User, X } from 'lucide-react';
+import { Search, Bell, MessageSquare, ChevronDown, Menu, User, X, Home, PlusSquare, List } from 'lucide-react';
 const Layout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -125,7 +125,7 @@ const Layout: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#0f172a] text-gray-300 py-8 mt-auto border-t-4 border-green-600">
+      <footer className="bg-[#0f172a] text-gray-300 py-8 mt-auto border-t-4 border-green-600 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <h3 className="text-xl font-black text-white tracking-tighter">Farm'o Connect</h3>
@@ -138,8 +138,42 @@ const Layout: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      {/* Bottom Mobile Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50 pb-0">
+        <div className="flex justify-around items-center h-16 relative">
+          <Link to="/" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/') ? 'text-green-700' : 'text-gray-500 hover:text-gray-900'}`}>
+            <Home size={22} className={isActive('/') ? 'fill-green-100' : ''} />
+            <span className="text-[10px] font-bold">Home</span>
+          </Link>
+          <Link to="/chats" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/chats') ? 'text-green-700' : 'text-gray-500 hover:text-gray-900'}`}>
+            <div className="relative">
+              <MessageSquare size={22} className={isActive('/chats') ? 'fill-green-100' : ''} />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border border-white"></span>
+            </div>
+            <span className="text-[10px] font-bold">Chats</span>
+          </Link>
+          
+          <div className="w-full flex justify-center">
+            <Link to="/create-listing" className="absolute -top-5 w-14 h-14 bg-green-600 rounded-full flex items-center justify-center shadow-lg border-4 border-[#f4f8f4] text-white hover:bg-green-700 hover:scale-105 transition-transform">
+              <PlusSquare size={24} />
+            </Link>
+          </div>
+
+          <Link to="/listings" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/listings') ? 'text-green-700' : 'text-gray-500 hover:text-gray-900'}`}>
+            <List size={22} className={isActive('/listings') ? 'fill-green-100' : ''} />
+            <span className="text-[10px] font-bold">My Ads</span>
+          </Link>
+          <Link to="/profile" className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/profile') ? 'text-green-700' : 'text-gray-500 hover:text-gray-900'}`}>
+            <User size={22} className={isActive('/profile') ? 'fill-green-100' : ''} />
+            <span className="text-[10px] font-bold">Profile</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Layout;
+
+
