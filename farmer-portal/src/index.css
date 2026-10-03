@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #3b82f6; /* Blue accent */
-  --color-secondary: #facc15; /* Yellow for the plus button */
-  --color-background: #121212; /* Dark background from screenshot */
-  --color-surface: #1e1e1e; /* Slightly lighter dark for cards */
-  --color-text-main: #ffffff;
-  --color-text-muted: #a1a1aa;
+  --color-primary: #15803d; 
+  --color-secondary: #facc15; 
+  --color-background: #f4f8f4; 
+  --color-surface: #ffffff; 
+  --color-text-main: #1f2937;
+  --color-text-muted: #6b7280;
 }
 
 @layer base {
@@ -15,4 +15,12 @@
     color: var(--color-text-main);
     font-family: system-ui, -apple-system, sans-serif;
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -1,129 +1,145 @@
-import React from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Search, ChevronDown, MessageSquare, Bell, User, Plus, Heart } from 'lucide-react';
-
+import React, { useState } from 'react';
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Search, Bell, MessageSquare, ChevronDown, Menu, User, X } from 'lucide-react';
 const Layout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212] text-white">
-      {/* OLX-Style Desktop Top Navbar */}
-      <div className="bg-[#121212] sticky top-0 z-50 border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center space-x-4">
-          
-          {/* Logo */}
-          <div 
-            className="flex items-center cursor-pointer mr-2"
-            onClick={() => navigate('/dashboard')}
-          >
-            <span className="text-3xl mr-2">🌾</span>
-            <h1 className="text-2xl font-black tracking-tight text-white hidden lg:block">Farm'o Connect</h1>
-          </div>
-
-          {/* Location Dropdown */}
-          <div className="hidden md:flex items-center bg-[#1e1e1e] border-2 border-white rounded px-3 py-2.5 w-64">
-            <Search size={20} className="text-white mr-2" />
-            <input 
-              type="text" 
-              placeholder="India" 
-              className="bg-transparent outline-none flex-1 text-white placeholder-gray-400 font-bold text-sm"
-              defaultValue="Tamil Nadu"
-            />
-            <ChevronDown size={24} className="text-white ml-2 cursor-pointer" />
-          </div>
-
-          {/* Main Search Bar */}
-          <div className="hidden md:flex flex-1 items-center bg-[#121212] border-2 border-white rounded">
-            <input 
-              type="text" 
-              placeholder="Find Fruits, Vegetables and more..." 
-              className="bg-transparent outline-none flex-1 text-white placeholder-gray-400 px-4 py-2.5 text-base"
-            />
-            <div 
-              className="bg-white p-2.5 px-4 cursor-pointer hover:bg-gray-200 transition"
-              onClick={() => alert('Search feature coming soon!')}
-            >
-              <Search size={24} className="text-[#121212] font-black" />
-            </div>
-          </div>
-
-          {/* Right Actions */}
-          <div className="flex items-center space-x-6 pl-4">
-            <div className="hidden lg:flex font-bold text-sm cursor-pointer hover:text-gray-300 uppercase tracking-widest">
-              English
-            </div>
-            <div className="cursor-pointer hover:text-gray-300 relative" onClick={() => navigate('/chats')}>
-              <MessageSquare size={24} />
-              <div className="absolute -top-1 -right-1 bg-blue-600 text-xs w-4 h-4 flex items-center justify-center rounded-full font-bold">2</div>
-            </div>
-            <div className="cursor-pointer hover:text-gray-300 hidden sm:block">
-              <Bell size={24} />
-            </div>
-            <div className="cursor-pointer flex items-center hover:text-gray-300" onClick={() => navigate('/profile')}>
-              <User size={24} className="mr-1" />
-              <ChevronDown size={16} />
-            </div>
+    <div className="min-h-screen bg-[#f4f8f4] flex flex-col font-sans">
+      {/* Top Header */}
+      <header className="bg-[#15803d] sticky top-0 z-50 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
             
-            {/* Sell Button */}
-            <button 
-              onClick={() => navigate('/create-listing')} 
-              className="border-[5px] border-t-cyan-400 border-l-yellow-400 border-r-blue-500 border-b-yellow-400 bg-white text-black px-5 py-1 rounded-full font-black tracking-widest shadow-lg flex items-center hover:scale-105 transition-transform"
-            >
-              <Plus size={20} className="mr-1 font-black" strokeWidth={3} /> SELL
-            </button>
+            {/* Logo */}
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
+              <div className="flex items-center space-x-2">
+                <div className="bg-white p-1.5 rounded-lg shadow-sm">
+                  <span className="text-2xl font-black text-green-700 tracking-tighter">F'oC</span>
+                </div>
+                <span className="text-2xl font-black text-white tracking-tight hidden sm:block">Farm'o Connect</span>
+              </div>
+            </div>
+
+            {/* Desktop Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-2xl mx-8">
+              <div className="flex w-full bg-white rounded-md shadow-inner overflow-hidden border-2 border-transparent focus-within:border-green-300 transition-colors">
+                <div className="flex items-center px-3 bg-gray-50 border-r border-gray-200 cursor-pointer hover:bg-gray-100">
+                  <Search size={18} className="text-gray-500" />
+                  <span className="ml-2 text-sm font-semibold text-gray-700">All India</span>
+                  <ChevronDown size={16} className="ml-1 text-gray-700" />
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Find Fresh Fruits, Vegetables, and Organic Produce..." 
+                  className="flex-1 px-4 py-2 text-gray-800 focus:outline-none placeholder-gray-400"
+                />
+                <button className="bg-[#166534] px-6 text-white font-bold hover:bg-[#14532d] transition-colors flex items-center justify-center">
+                  <Search size={20} />
+                </button>
+              </div>
+            </div>
+
+            {/* Right Icons & Auth */}
+            <div className="hidden md:flex items-center space-x-6">
+              <span className="text-white font-bold text-sm cursor-pointer hover:text-green-200 uppercase tracking-widest">English</span>
+              
+              <div className="flex space-x-4 text-white">
+                <button className="relative p-1 hover:bg-green-800 rounded-full transition-colors" onClick={() => navigate('/chats')}>
+                  <MessageSquare size={24} />
+                  <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-green-700"></span>
+                </button>
+                <button className="p-1 hover:bg-green-800 rounded-full transition-colors">
+                  <Bell size={24} />
+                </button>
+              </div>
+
+              <div className="flex items-center space-x-2 cursor-pointer hover:bg-green-800 p-1.5 rounded-md transition-colors" onClick={() => navigate('/profile')}>
+                <div className="w-8 h-8 bg-green-900 rounded-full flex items-center justify-center border-2 border-green-300">
+                  <User size={18} className="text-white" />
+                </div>
+                <ChevronDown size={16} className="text-white" />
+              </div>
+
+              <button 
+                onClick={() => navigate('/create-listing')}
+                className="bg-white text-green-800 font-extrabold px-6 py-2 rounded-full border-[5px] border-green-600/30 shadow-lg hover:bg-green-50 transition-colors flex items-center shadow-green-900/20"
+              >
+                <span className="text-xl mr-1 leading-none">+</span> SELL
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center">
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-white p-2 hover:bg-green-800 rounded-md"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Secondary Categories Bar (OLX Style) */}
-      <div className="border-b border-gray-800 bg-[#121212] hidden md:block shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-2 text-[13px] font-semibold flex items-center space-x-6 text-gray-300">
-          <span className="font-bold text-white flex items-center cursor-pointer uppercase tracking-wider hover:text-gray-300 transition">
-            All Categories <ChevronDown size={18} className="ml-1 font-black"/>
-          </span>
-          <span className="cursor-pointer hover:text-white transition">Fresh Fruits</span>
-          <span className="cursor-pointer hover:text-white transition">Vegetables</span>
-          <span className="cursor-pointer hover:text-white transition">Organic Produce</span>
-          <span className="cursor-pointer hover:text-white transition">Spices</span>
-          <span className="cursor-pointer hover:text-white transition">Grains</span>
+        {/* Categories Bar */}
+        <div className="bg-white border-b border-gray-200 shadow-sm hidden md:block">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+            <div className="flex items-center space-x-6 text-sm">
+              <span className="font-bold text-gray-800 flex items-center cursor-pointer uppercase tracking-wider hover:text-green-700 transition">
+                All Categories <ChevronDown size={18} className="ml-1 text-gray-500"/>
+              </span>
+              <span className="cursor-pointer text-gray-600 hover:text-green-700 font-medium transition">Fresh Fruits</span>
+              <span className="cursor-pointer text-gray-600 hover:text-green-700 font-medium transition">Vegetables</span>
+              <span className="cursor-pointer text-gray-600 hover:text-green-700 font-medium transition">Organic Produce</span>
+              <span className="cursor-pointer text-gray-600 hover:text-green-700 font-medium transition">Spices</span>
+              <span className="cursor-pointer text-gray-600 hover:text-green-700 font-medium transition">Grains</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Main Content Area */}
-      <div className="flex-1 w-full bg-[#121212]">
-        <div className="max-w-7xl mx-auto w-full h-full">
-          <Outlet />
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-1 shadow-lg absolute w-full z-40">
+          <div className="mb-4">
+            <div className="flex bg-gray-100 rounded-md p-2">
+              <Search size={20} className="text-gray-500 mr-2" />
+              <input type="text" placeholder="Search..." className="bg-transparent w-full outline-none text-gray-800" />
+            </div>
+          </div>
+          <Link to="/" className={`block px-3 py-2 rounded-md font-medium ${isActive('/') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50'}`}>Dashboard</Link>
+          <Link to="/listings" className={`block px-3 py-2 rounded-md font-medium ${isActive('/listings') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50'}`}>My Ads</Link>
+          <Link to="/chats" className={`block px-3 py-2 rounded-md font-medium ${isActive('/chats') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50'}`}>Chats</Link>
+          <Link to="/profile" className={`block px-3 py-2 rounded-md font-medium ${isActive('/profile') ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50'}`}>Profile</Link>
+          <Link to="/create-listing" className="block px-3 py-2 rounded-md text-base font-bold text-white bg-green-600 hover:bg-green-700 mt-4 text-center">SELL NOW</Link>
         </div>
-      </div>
+      )}
 
-      {/* Mobile Bottom Navigation (Only visible on small screens) */}
-      <div className="md:hidden fixed bottom-0 w-full bg-[#121212] border-t border-gray-800 px-4 py-3 flex justify-between items-center z-50">
-        <div onClick={() => navigate('/dashboard')} className={`flex flex-col items-center ${location.pathname.includes('/dashboard') ? 'text-white' : 'text-gray-500'}`}>
-          <Search size={24} />
-          <span className="text-[10px] font-bold mt-1">HOME</span>
+      {/* Main Content */}
+      <main className="flex-1 relative max-w-7xl w-full mx-auto">
+        <Outlet />
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#0f172a] text-gray-300 py-8 mt-auto border-t-4 border-green-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <h3 className="text-xl font-black text-white tracking-tighter">Farm'o Connect</h3>
+            <p className="text-sm mt-1 text-gray-400">Connecting farmers directly to buyers.</p>
+          </div>
+          <div className="flex space-x-6 text-sm">
+            <span className="hover:text-white cursor-pointer transition-colors">Help & Support</span>
+            <span className="hover:text-white cursor-pointer transition-colors">About Us</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
+          </div>
         </div>
-        <div onClick={() => navigate('/chats')} className={`flex flex-col items-center ${location.pathname.includes('/chats') ? 'text-white' : 'text-gray-500'}`}>
-          <MessageSquare size={24} />
-          <span className="text-[10px] font-bold mt-1">CHATS</span>
-        </div>
-        <div onClick={() => navigate('/create-listing')} className="relative -top-5">
-           <div className="border-[4px] border-t-cyan-400 border-l-yellow-400 border-r-blue-500 border-b-yellow-400 bg-white text-black p-3 rounded-full shadow-lg">
-             <Plus size={24} strokeWidth={3} />
-           </div>
-        </div>
-        <div onClick={() => navigate('/listings')} className={`flex flex-col items-center ${location.pathname.includes('/listings') ? 'text-white' : 'text-gray-500'}`}>
-          <Heart size={24} />
-          <span className="text-[10px] font-bold mt-1">MY ADS</span>
-        </div>
-        <div onClick={() => navigate('/profile')} className={`flex flex-col items-center ${location.pathname.includes('/profile') ? 'text-white' : 'text-gray-500'}`}>
-          <User size={24} />
-          <span className="text-[10px] font-bold mt-1">ACCOUNT</span>
-        </div>
-      </div>
+      </footer>
     </div>
   );
 };
-
 
 export default Layout;
